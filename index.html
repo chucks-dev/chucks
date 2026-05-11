@@ -130,6 +130,16 @@
       transition: opacity 0.2s, transform 0.2s;
     }
     .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+    .hamburger {
+      display: none;
+      font-size: 20px;
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: none;
+      padding: 0;
+      margin-left: 16px;
+    }
 
     /* HERO */
     .hero {
@@ -621,6 +631,21 @@
     @media (max-width: 900px) {
       nav { padding: 20px 24px; }
       .nav-links { display: none; }
+      .hamburger { display: block; }
+      .nav-links.active {
+        display: flex;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(10,10,10,0.95);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        padding: 20px 24px;
+        gap: 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links.active a { padding: 8px 0; }
       .hero, section { padding: 80px 24px; }
       .hero { grid-template-columns: 1fr; padding-top: 100px; }
       .hero-right { display: none; }
@@ -631,6 +656,16 @@
       .exp-item { grid-template-columns: 1fr; gap: 8px; }
       .exp-badge { justify-self: start; }
       footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: clamp(40px, 8vw, 60px); }
+      .section-title { font-size: clamp(28px, 6vw, 48px); }
+      .hero, section { padding: 60px 20px; }
+      .hero { padding-top: 80px; }
+      .project-card { padding: 24px; }
+      .service-item { padding: 36px 30px; }
+      footer { padding: 24px 20px; }
     }
   </style>
 </head>
@@ -649,6 +684,7 @@
       <li><a href="#services">Services</a></li>
       <li><a href="#experience">Experience</a></li>
     </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">☰</button>
     <a href="#contact" class="nav-cta">Let's Talk</a>
   </nav>
 
@@ -1012,6 +1048,16 @@
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+    navLinks.addEventListener('click', () => {
+      navLinks.classList.remove('active');
     });
 
     // Scroll reveal
